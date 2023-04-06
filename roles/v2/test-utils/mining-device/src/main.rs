@@ -8,7 +8,9 @@ use std::{
     net::{IpAddr, Ipv4Addr, SocketAddr},
     sync::Arc,
 };
-
+use rand:: random;
+use sha256::digest;
+use std::time::{Duration, Instant};
 async fn connect(address: SocketAddr, handicap: u32) {
     let stream = TcpStream::connect(address).await.unwrap();
     let (receiver, sender): (Receiver<EitherFrame>, Sender<EitherFrame>) =
@@ -498,4 +500,21 @@ impl Miner {
             Err(())
         }
     }
+}
+pub fn test_hashrate() -> f64
+{
+    let transaction_data = String::from("A lot of transaction and other block stuff");
+    let _tok = Duration::from_secs(10);
+    let _tik = Instant::now();
+    let mut calcs:f64 = 0.0; 
+    while _tik.elapsed().as_secs() <= 10
+    {
+        let mut trans_block = transaction_data.clone().to_string();
+        let x:u64 = random();
+        let tbp  = x.to_string();
+        trans_block.push_str(tbp.as_str());
+        let _val = digest(trans_block);
+        calcs+=1.0;
+    }
+    calcs/10.0
 }

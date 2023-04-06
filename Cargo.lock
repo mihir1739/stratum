@@ -1085,6 +1085,7 @@ dependencies = [
  "network_helpers",
  "rand 0.8.5",
  "roles_logic_sv2",
+ "sha256",
 ]
 
 [[package]]
@@ -1740,6 +1741,16 @@ dependencies = [
  "cfg-if",
  "cpufeatures",
  "digest 0.10.6",
+]
+
+[[package]]
+name = "sha256"
+version = "1.1.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "328169f167261957e83d82be47f9e36629e257c62308129033d7f7e7c173d180"
+dependencies = [
+ "hex",
+ "sha2 0.9.9",
 ]
 
 [[package]]
