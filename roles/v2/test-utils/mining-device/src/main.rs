@@ -503,18 +503,20 @@ impl Miner {
 }
 pub fn test_hashrate() -> f64
 {
-    let transaction_data = String::from("A lot of transaction and other block stuff");
-    let _tok = Duration::from_secs(10);
+    let mut transaction_data:[u8;80] = [255;80]; 
     let _tik = Instant::now();
-    let mut calcs:f64 = 0.0; 
-    while _tik.elapsed().as_secs() <= 10
+    let mut calcs:f64 = 0.0;
+    let mut ext_time = 0;
+    while _tik.elapsed().as_secs() <= 5
     {
-        let mut trans_block = transaction_data.clone().to_string();
-        let x:u64 = random();
-        let tbp  = x.to_string();
-        trans_block.push_str(tbp.as_str());
-        let _val = digest(trans_block);
+        let _ext1 = Instant::now();
+        transaction_data[79] = random();
+        let _ext2 = Instant::now();
+        let _time_diff = _ext2.duration_since(_ext1);
+        ext_time += _time_diff.as_micros() as u32;
+        let _ = digest(&transaction_data);
         calcs+=1.0;
     }
-    calcs/10.0
+    let time_taken = 5.00 - (ext_time/1000000) as f64;
+    calcs/time_taken
 }
